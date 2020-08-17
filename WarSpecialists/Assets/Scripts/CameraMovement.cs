@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public GameObject target;
-    private float offset = 10.0f;   //for distance after pressing f to focus
-    private float offsetBoundaries = 1.0f;
+    [Header("Player Settings")]
+    [SerializeField]
+    private GameObject target;
+    [SerializeField]
+    private float offset = 10.0f;           //offset distance after pressing f to focus camera over player again
+    
 
     //to variables to make it more readable
     private float maxOffsetX, maxOffsetZ;
 
-    public GameObject map;
-    public float scrollSpeed = 20.0f;
+    [Header("Map Settings")]
+    [SerializeField]
+    private GameObject map;
+    [SerializeField]
+    private float scrollSpeed = 20.0f;      //speed of scrolling over the map
+    [SerializeField]
+    private float offsetBoundaries = 1.0f;  //offset so the camera will always focus part of the map when reach far border
 
     void Start()
     {
@@ -21,7 +29,6 @@ public class CameraMovement : MonoBehaviour
         //we got the map bounds size, and divide it by 2, because pivot is in middle
         maxOffsetX = map.GetComponent<Renderer>().bounds.size.x / 2;
         maxOffsetZ = map.GetComponent<Renderer>().bounds.size.z / 2;
-      //  offsetZ = maxOffsetZ
 
     }
 
