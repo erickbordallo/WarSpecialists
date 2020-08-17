@@ -35,6 +35,7 @@ public class CameraMovement : MonoBehaviour
         {
             transform.Translate(Vector3.forward * Time.deltaTime * scrollSpeed, Space.World);
         }
+
         if (transform.position.z > map.transform.position.z - maxOffsetZ - offsetBoundaries &&
             Input.mousePosition.y <= Screen.height * .1)
         {
