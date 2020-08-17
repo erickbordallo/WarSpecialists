@@ -36,7 +36,9 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         //might need a bit tweak when we have the map ready
-
+        //for each side of the screen, first checks that camera position is inside the limits of the map
+        //second validation checks the input mouse position if its close to the border camera moves on that direction
+     
         if (transform.position.z < map.transform.position.z + maxOffsetZ - offsetBoundaries &&
             Input.mousePosition.y >= Screen.height * .9 && Input.mousePosition.y < Screen.height)
         {
