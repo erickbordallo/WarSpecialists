@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float _moveSpeed;
 
-    private Rigidbody _rb;
+    private float _rotationSpeedMovement;
+    private NavMeshAgent agent;
+    private float _rotationVelocity;
 
     private void Start()
     {
-        _rb = gameObject.GetComponent<Rigidbody>();
+        agent = gameObject.GetComponent<NavMeshAgent>();
+        _rotationSpeedMovement = 0.075f;
+        agent.speed = _moveSpeed;
     }
 
     private void Update()
@@ -23,15 +28,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void Moving(Vector3 mousePosition)
     {
-        if (!IsBlocked(mousePosition))
-        {
-            // Moving
-        }
-    }
+        RaycastHit hit;
 
-    private bool IsBlocked(Vector3 mousePosition)
-    {
-        // Check isblocked
-        return true;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(mousePosition), out hit, Mathf.Infinity))
+        {
+            agent.SetDestination(hit.point);
+
+            Quaternion rotationToLookAt = Quaternion.LookRotation(hit.point - transform.position);
+            float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                rotationToLookAt.eulerAngles.y,
+                ref _rotationVelocity,
+                _rotationSpeedMovement * (Time.deltaTime * 5));
+
+            transform.eulerAngles = new Vector3(0, rotationY, 0);
+        }
     }
 }
