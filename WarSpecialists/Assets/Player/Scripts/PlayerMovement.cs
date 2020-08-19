@@ -6,8 +6,9 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float _moveSpeed;
-
+    [SerializeField]
     private float _rotationSpeedMovement;
+
     private NavMeshAgent agent;
     private float _rotationVelocity;
 
