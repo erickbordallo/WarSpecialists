@@ -1,22 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private float _moveSpeed;
-    [SerializeField]
     private float _rotationSpeedMovement;
     
+    private float _moveSpeed;
     private NavMeshAgent agent;
     private float _rotationVelocity;
-
+    public bool IsMoving { get; private set; }
     private void Start()
     {
+        _moveSpeed = gameObject.GetComponent<PlayerBase>().MoveSpeed;
         agent = gameObject.GetComponent<NavMeshAgent>();
         _rotationSpeedMovement = 0.075f;
         agent.speed = _moveSpeed;
+        agent.acceleration = _moveSpeed;
+        IsMoving = false;
     }
 
     private void Update()
@@ -24,7 +27,20 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Moving(Input.mousePosition);
+            IsMoving = true;
         }
+
+        if (!agent.pathPending)
+        {
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                {
+                    IsMoving = false;
+                }
+            }
+        }
+
     }
 
     private void Moving(Vector3 mousePosition)
