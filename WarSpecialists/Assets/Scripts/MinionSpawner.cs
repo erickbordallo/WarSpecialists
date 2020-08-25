@@ -7,13 +7,13 @@ public class MinionSpawner : MonoBehaviour
     [SerializeField]
     private GameObject minionSpawnee;
     [SerializeField]
-    public int quantity;
+    private int quantity;
     [SerializeField]
-    public bool stopSpawns = false;
+    private bool stopSpawns = false;
     [SerializeField]
-    public float initialSpawnTime = 0;
+    private float initialSpawnTime = 0;
     [SerializeField]
-    public float spawnDelay = 30;
+    private float spawnDelay = 30;
 
     private float boundZ;
     // Start is called before the first frame update
