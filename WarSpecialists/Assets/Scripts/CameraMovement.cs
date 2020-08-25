@@ -48,7 +48,6 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-        //offset = transform.position.y;
 
         //we got the map bounds size, and divide it by 2, because pivot is in middle
         maxOffsetX = map.GetComponent<Renderer>().bounds.size.x / 2;     
