@@ -13,6 +13,7 @@ public class Minion : MonoBehaviour
     public Transform target;
     public List<GameObject> Path;
     public int PathCount = 0;
+    public float dist;
     void Start()
     {
         agent = GetComponentInChildren<UnityEngine.AI.NavMeshAgent>();
@@ -24,6 +25,7 @@ public class Minion : MonoBehaviour
 
     private void Update()
     {
+        dist = agent.remainingDistance;
         if (target != null)
             agent.SetDestination(target.position);
 
@@ -33,8 +35,11 @@ public class Minion : MonoBehaviour
         }
         else
         {
-            PathCount++;
-            target = Path[PathCount].transform;
+            if (PathCount + 1 < Path.Count)
+            {
+                PathCount++;
+                target = Path[PathCount].transform;
+            }
         }
     }
 }

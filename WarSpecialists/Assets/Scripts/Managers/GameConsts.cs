@@ -10,6 +10,9 @@ public static class GameConsts
     public static int SUPER_COUNT = 1;
     public static int SUPER_ALL_COUNT = 2;
 
+    public static int RED_TEAM = 0;
+    public static int BLUE_TEAM = 1;
+
     public static int SPAWN_MID = 0;
     public static int SPAWN_BOT = 1;
     public static int SPAWN_TOP = 2;

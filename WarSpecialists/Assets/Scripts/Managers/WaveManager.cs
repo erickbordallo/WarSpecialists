@@ -5,14 +5,15 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     public List<GameObject> SpawnPoints;
-    public List<GameObject> TopSpawnPoints;
-    public List<GameObject> MidSpawnPoints;
-    public List<GameObject> BotSpawnPoints;
+    public List<Lane> LaneSpawnPoints;
+
+  
     public GameObject MeleePrefab;
     public GameObject RangePrefab;
     public GameObject CannonPrefab;
     public GameObject SuperPrefab;
 
+    public int TeamId = 0;
     public int WaveNumber = 0;
     public float WaveTimer = 0;
 
@@ -85,11 +86,11 @@ public class WaveManager : MonoBehaviour
                 && InGameManager.Instance.GameTime <= GameConsts.CANNON_SECOND_WAVE)
             {
                 if (WaveNumber % 2 == 0)
-                {
+                 {
                     SpawnUnit(CannonPrefab, GameConsts.SPAWN_TOP);
                     SpawnUnit(CannonPrefab, GameConsts.SPAWN_MID);
                     SpawnUnit(CannonPrefab, GameConsts.SPAWN_BOT);
-                }
+                 }
             }
             else
             {
@@ -124,26 +125,36 @@ public class WaveManager : MonoBehaviour
                 Quaternion.identity);
         Minion minion = go.GetComponent<Minion>();
 
-        switch(spawnLoc)
-        {
-            case 0:
-                {
-                    minion.Path = MidSpawnPoints;
-                    minion.target = MidSpawnPoints[0].transform;
-                    break;
-                }
-            case 1:
-                {
-                    minion.Path = BotSpawnPoints;
-                    minion.target = BotSpawnPoints[0].transform;
-                    break;
-                }
-            case 2:
-                {
-                    minion.Path = TopSpawnPoints;
-                    minion.target = TopSpawnPoints[0].transform;
-                    break;
-                }
-        }
+        minion.Path = InGameManager.MakePath(TeamId, spawnLoc);
+        minion.target = minion.Path[0].transform;
+
+
+        //switch(spawnLoc)
+        //{
+        //    case 0:
+        //        {
+        //            minion.Path = MidSpawnPoints;
+        //            minion.target = MidSpawnPoints[0].transform;
+        //            break;
+        //        }
+        //    case 1:
+        //        {
+        //            minion.Path = BotSpawnPoints;
+        //            minion.target = BotSpawnPoints[0].transform;
+        //            break;
+        //        }
+        //    case 2:
+        //        {
+        //            minion.Path = TopSpawnPoints;
+        //            minion.target = TopSpawnPoints[0].transform;
+        //            break;
+        //        }
+        //}
     }
+}
+
+[System.Serializable]
+public class Lane
+{
+    public List<GameObject> Waypoints;
 }
