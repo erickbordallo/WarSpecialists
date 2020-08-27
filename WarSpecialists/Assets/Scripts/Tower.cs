@@ -5,6 +5,7 @@ using System;
 
 public class Tower : MonoBehaviour
 {
+   [SerializeField] private List<PlayerHealth> playerList;
     private Transform target;
 
     [Header("Attributes")]
@@ -30,31 +31,52 @@ public class Tower : MonoBehaviour
 
     void UpdateTarget()
     {
-        GameObject[] palyers = GameObject.FindGameObjectsWithTag(playerTag);
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestPlayer = null;
-
-        foreach (GameObject player in palyers)
+        if(target == null)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-            if(distanceToPlayer < shortestDistance)
+            GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
+            float shortestDistance = Mathf.Infinity;
+            GameObject nearestPlayer = null;
+
+            foreach (GameObject player in players)
             {
-                shortestDistance = distanceToPlayer;
-                nearestPlayer = player;
+                float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+                if (distanceToPlayer < shortestDistance)
+                {
+                    shortestDistance = distanceToPlayer;
+                    nearestPlayer = player;
+                }
+            }
+
+            if (nearestPlayer != null && shortestDistance <= range)
+            {
+                target = nearestPlayer.transform;
+            }
+
+            else
+            {
+                target = null;
+
             }
         }
 
-        if(nearestPlayer != null && shortestDistance <= range)
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var player = other.GetComponent<PlayerHealth>();
+        if (player)
         {
-            target = nearestPlayer.transform;
+            playerList.Add(player);
         }
+    }
 
-        else
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<PlayerHealth>();
+        if (player)
         {
-            target = null;
-
+            playerList.Remove(player);
         }
-
     }
 
     void Update()
