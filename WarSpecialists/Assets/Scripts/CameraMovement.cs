@@ -27,30 +27,30 @@ public class CameraMovement : MonoBehaviour
 
     //screen barriers to define movement of camera if reach certain percentaje of the screen width and height
     [SerializeField]
-    private float topBarrier = 0.9f;
+    private float topBarrier = 0.85f;
     [SerializeField]
-    private float botBarrier = 0.1f;
+    private float botBarrier = 0.15f;
     [SerializeField]
-    private float leftBarrier = 0.1f;
+    private float leftBarrier = 0.85f;
     [SerializeField]
-    private float rightBarrier = 0.9f;
+    private float rightBarrier = 0.15f;
 
     //since the view of the camera has an angle we have to add X and Z offset distances so camera can cover all map
     //these only needs to be adjusted if height(y) or angle of the camera is modified.
     [SerializeField]
-    private float topOffset = -200.0f;
+    private float topOffset = -70.0f;
     [SerializeField]
-    private float botOffset = -100.0f;
+    private float botOffset = 0.0f;
     [SerializeField]
-    private float leftOffset = 100.0f;
+    private float leftOffset = 50.0f;
     [SerializeField]
-    private float rightOffset = -50.0f; 
+    private float rightOffset = 30.0f;
 
     void Start()
     {
 
         //we got the map bounds size, and divide it by 2, because pivot is in middle
-        maxOffsetX = map.GetComponent<Renderer>().bounds.size.x / 2;     
+        maxOffsetX = map.GetComponent<Renderer>().bounds.size.x / 2;
         maxOffsetZ = map.GetComponent<Renderer>().bounds.size.z / 2;
 
         CenterCameraInPlayer();
@@ -66,31 +66,43 @@ public class CameraMovement : MonoBehaviour
         if (transform.localPosition.z < map.transform.position.z + maxOffsetZ + topOffset &&
             Input.mousePosition.y >= Screen.height * topBarrier && Input.mousePosition.y < Screen.height)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * scrollSpeed, Space.Self);
-            Cursor.visible = false;
+            if (transform.position.x > -250.0f)
+            {
+                transform.Translate(Vector3.forward * Time.deltaTime * scrollSpeed, Space.Self);
+                Cursor.visible = false;
+            }
         }
 
         if (transform.localPosition.z > map.transform.position.z - maxOffsetZ + botOffset &&
-            Input.mousePosition.y <= Screen.height * botBarrier)
+            Input.mousePosition.y <= Screen.height * botBarrier && Input.mousePosition.y > 0)
         {
-            transform.Translate(Vector3.back * Time.deltaTime * scrollSpeed, Space.Self);
-            Cursor.visible = false;
+            if (transform.position.x < 250.0f)
+            {
+                transform.Translate(Vector3.back * Time.deltaTime * scrollSpeed, Space.Self);
+                Cursor.visible = false;
+            }
         }
 
         if (transform.position.x > map.transform.position.x - maxOffsetX + leftOffset &&
-            Input.mousePosition.x <= Screen.width * leftBarrier)
+            Input.mousePosition.x <= Screen.width * leftBarrier && Input.mousePosition.x > 0)
         {
-            transform.Translate(Vector3.left * Time.deltaTime * scrollSpeed, Space.Self);
-            Cursor.visible = false;
+            if (transform.position.z > -250.0f)
+            {
+                transform.Translate(Vector3.left * Time.deltaTime * scrollSpeed, Space.Self);
+                Cursor.visible = false;
+            }
         }
 
         if (transform.position.x < map.transform.position.x + maxOffsetX + rightOffset &&
-            Input.mousePosition.x >= Screen.width * rightBarrier)
+            Input.mousePosition.x >= Screen.width * rightBarrier && Input.mousePosition.x < Screen.width)
         {
-            transform.Translate(Vector3.right * Time.deltaTime * scrollSpeed, Space.Self);
-            Cursor.visible = false;
+            if (transform.position.z < 250.0f)
+            {
+                transform.Translate(Vector3.right * Time.deltaTime * scrollSpeed, Space.Self);
+                Cursor.visible = false;
+            }
         }
-        
+
 
 
         //whenever the player type f, camera will go back to center the player, we can change key later
@@ -102,6 +114,6 @@ public class CameraMovement : MonoBehaviour
 
     private void CenterCameraInPlayer()
     {
-        transform.position = new Vector3(target.transform.position.x+offsetPlayerX, transform.position.y, target.transform.position.z + offsetPlayerZ);
+        transform.position = new Vector3(target.transform.position.x + offsetPlayerX, transform.position.y, target.transform.position.z + offsetPlayerZ);
     }
 }
