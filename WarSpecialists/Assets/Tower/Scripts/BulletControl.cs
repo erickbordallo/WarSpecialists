@@ -45,11 +45,11 @@ public class BulletControl : MonoBehaviour
 
     void Damage(Transform player)
     {
-        //PlayerHealth p = player.GetComponent<PlayerHealth>();
-        //if (p != null)
-        //{
-        //    p.TakeDamage(damage);
-        //}
+        TargetHealth p = player.GetComponent<TargetHealth>();
+        if (p != null)
+        {
+            p.TakeDamage(damage);
+        }
 
     }
 
