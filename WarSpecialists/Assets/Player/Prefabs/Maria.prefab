@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3323514203832850634}
   m_Layer: 0
   m_Name: Maria
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 1197515933438465814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 4338062597288685236}
   m_Father: {fileID: 0}
@@ -111,6 +111,7 @@ MonoBehaviour:
   _health: 100
   _moveSpeed: 20
   _AttackSpeed: 2
+  _AttackRange: 0
 --- !u!114 &7134460865417958704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +140,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroAttackType: 0
   targetedEnemy: {fileID: 0}
-  attackRange: 2
   rotateSpeedForAttack: 0.075
   basicAtkIdle: 0
   isHeroAlive: 0
