@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class TowerController : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    [SerializeField]
+    private List<TargetHealth> playerList;
+    private Transform target;
+
+    public float range = 4.0f;
+    public float fireRate = 1f;
+    private float fireCountdown = 0f;
+
+    public string playerTag = "Player";
+
+    public Transform partToRotate;
+    public float turnSpeed = 10.0f;
+
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         print("Somebody get into the attack range of tower");
-
+        var player = other.GetComponent<TargetHealth>();
+        if (player)
+        {
+            playerList.Add(player);
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -29,6 +43,27 @@ public class TowerController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        
+        var player = other.GetComponent<TargetHealth>();
+        if (player)
+        {
+            playerList.Remove(player);
+        }
+    }
+
+    void Shoot()
+    {
+        GameObject bulletGo = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        BulletControl bullet = bulletGo.GetComponent<BulletControl>();
+
+        if (bullet != null)
+        {
+            bullet.Seek(target);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
