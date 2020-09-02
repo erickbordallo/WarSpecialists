@@ -16,12 +16,4 @@ public class ClientHandle : MonoBehaviour
 
         Client.instance.udp.Connect(((IPEndPoint)Client.instance.tcp.socket.Client.LocalEndPoint).Port);
     }
-
-    public static void UDPTest(GameServer.Packet _packet)
-    {
-        string msg = _packet.ReadString();
-        Debug.Log($"Received packet via UDP. Contains message: {msg}");
-
-        ClientSend.UDPTestReceived();
-    }
 }

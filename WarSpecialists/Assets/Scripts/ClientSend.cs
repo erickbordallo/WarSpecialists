@@ -27,14 +27,5 @@ public class ClientSend : MonoBehaviour
             SendTCPData(_packet);
         }
     }
-
-    public static void UDPTestReceived()
-    {
-        using (GameServer.Packet _packet = new GameServer.Packet((int)GameServer.ClientPackets.udpTestReceived))
-        {
-            _packet.Write("Received a UDP packet.");
-            SendUdpData(_packet);
-        }
-    }
     #endregion
 }

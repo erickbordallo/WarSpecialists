@@ -246,8 +246,7 @@ public class Client : MonoBehaviour
     {
         packetHandlers = new Dictionary<int, PacketHandler>()
         {
-            { (int)GameServer.ServerPackets.welcome, ClientHandle.Welcome },
-            { (int)GameServer.ServerPackets.udpTest, ClientHandle.UDPTest }
+            { (int)GameServer.ServerPackets.welcome, ClientHandle.Welcome }
         };
 
         Debug.Log("Initialized Packets.");
