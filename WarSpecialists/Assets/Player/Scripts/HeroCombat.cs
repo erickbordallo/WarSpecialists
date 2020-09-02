@@ -10,12 +10,11 @@ public class HeroCombat : MonoBehaviour
     public HeroAttackType heroAttackType;
 
     public GameObject targetedEnemy;
-    public float attackRange;
     public float rotateSpeedForAttack;
 
     private PlayerMovement movement;
 
-    public bool basicAtkIdle = false;
+    public bool basicAtkIdle = true;
     public bool isHeroAlive;
     public bool performMeleeAttack = true;
 
@@ -23,6 +22,7 @@ public class HeroCombat : MonoBehaviour
 
     private float attackDelayTime;
     private float attackTimer = 0f;
+    private float attackRange;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +31,7 @@ public class HeroCombat : MonoBehaviour
         IsAttacking = false;
         attackDelayTime = gameObject.GetComponent<PlayerBase>().AttackSpeed;
         attackTimer = attackDelayTime;
+        attackRange = gameObject.GetComponent<PlayerBase>().AttackRange;
     }
 
     // Update is called once per frame
@@ -68,9 +69,7 @@ public class HeroCombat : MonoBehaviour
                         }
                     }
                 }
-
             }
-
         }
     }
 }
