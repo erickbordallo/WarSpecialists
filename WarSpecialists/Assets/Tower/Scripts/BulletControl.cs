@@ -4,24 +4,53 @@ using UnityEngine;
 
 public class BulletControl : MonoBehaviour
 {
-    public Transform target;
-    
-    [SerializeField]
-    private float SpeedOfBullet = 10.0f;
+    private Transform target;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    public float speed = 70f;
+    public int damage = 50;
+
+    public void Seek(Transform _target)
     {
-        
+        target = _target;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.LookAt(target);
-        transform.Translate(Vector3.forward * Time.deltaTime*SpeedOfBullet);
+        if (target == null)
+        {
+            //Destroy(gameObject);
+            return;
+        }
+
+        Vector3 dir = target.position - transform.position;
+        float distanceThisFram = speed * Time.deltaTime;
+
+        if (dir.magnitude <= distanceThisFram)
+        {
+            HitTarget();
+            return;
+        }
+
+        transform.Translate(dir.normalized * distanceThisFram, Space.World);
+    }
+
+
+    void HitTarget()
+    {
+        Damage(target);
+        // Destroy(target.gameObject);
+        Destroy(gameObject);
+    }
+
+    void Damage(Transform player)
+    {
+        //PlayerHealth p = player.GetComponent<PlayerHealth>();
+        //if (p != null)
+        //{
+        //    p.TakeDamage(damage);
+        //}
 
     }
 
-    
 }
