@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1986437981630292658}
   - component: {fileID: 3896430309773597626}
   - component: {fileID: 8125196164855955300}
+  - component: {fileID: 7134460865417958704}
+  - component: {fileID: 3323514203832850634}
   m_Layer: 0
   m_Name: Maria
   m_TagString: Untagged
@@ -71,7 +73,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 0
+  m_AngularSpeed: 1200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
@@ -93,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeedMovement: 0.075
+  _rotationVelocity: 0
 --- !u!114 &8125196164855955300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +109,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 100
-  _moveSpeed: 50
+  _moveSpeed: 20
+  _AttackSpeed: 2
+--- !u!114 &7134460865417958704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197515933438465814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 889548bece7066f4d962af9aaf59c4c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedHero: {fileID: 0}
+  heroPlayer: 0
+--- !u!114 &3323514203832850634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197515933438465814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e263e83370ebd642ac2f88bba4868a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroAttackType: 0
+  targetedEnemy: {fileID: 0}
+  attackRange: 2
+  rotateSpeedForAttack: 0.075
+  basicAtkIdle: 0
+  isHeroAlive: 0
+  performMeleeAttack: 1
 --- !u!95 &1650934331413570631
 Animator:
   serializedVersion: 3

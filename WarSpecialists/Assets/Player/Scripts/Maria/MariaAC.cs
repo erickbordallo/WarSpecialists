@@ -8,6 +8,7 @@ public class MariaAC : MonoBehaviour
     private Animator _animator;
     private bool _isMoving;
     private bool _isAlive;
+    private bool _isAttack;
     private void Start()
     {
         // Set Moveing animation
@@ -18,6 +19,9 @@ public class MariaAC : MonoBehaviour
         // Set Death animation
         _isAlive = _player.gameObject.GetComponent<PlayerBase>().IsAlive;
         _animator.SetBool("IsAlive", _isAlive);
+
+        _isAttack = _player.gameObject.GetComponent<HeroCombat>().IsAttacking;
+        _animator.SetBool("IsAttacking", _isAttack);
     }
 
     private void Update()
@@ -29,5 +33,9 @@ public class MariaAC : MonoBehaviour
         // Set Death animation
         _isAlive = _player.gameObject.GetComponent<PlayerBase>().IsAlive;
         _animator.SetBool("IsAlive", _isAlive);
+
+        // Set Attack animation
+        _isAttack = _player.gameObject.GetComponent<HeroCombat>().IsAttacking;
+        _animator.SetBool("IsAttacking", _isAttack);
     }
 }
