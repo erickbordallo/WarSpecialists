@@ -15,7 +15,7 @@ public class HeroCombat : MonoBehaviour
 
     private PlayerMovement movement;
 
-    public bool basicAtkIdle = false;
+    public bool basicAtkIdle = true;
     public bool isHeroAlive;
     public bool performMeleeAttack = true;
 
