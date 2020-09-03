@@ -5,37 +5,63 @@ using UnityEngine;
 public class MinionSpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject minionSpawnee;
-    [SerializeField]
-    private int quantity;
-    [SerializeField]
-    private bool stopSpawns = false;
-    [SerializeField]
-    private float initialSpawnTime = 0;
-    [SerializeField]
-    private float spawnDelay = 30;
+    private GameObject blueTeamMinionPrefab;
 
-    private float boundZ;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private GameObject redTeamMinionPrefab;
+
+    [SerializeField]
+    private int maxQuantity;
+    private int currentQuantity;
+    [SerializeField]
+    private float waveSpawnDelay = 30;
+    private float currentSpawnTime = 0;
+    [SerializeField]
+    private float spawnCadency = 1.0f;
+    private float currentCadency = 0.0f;
+
+    public GameTypes.Team team = GameTypes.Team.Blue;
+    public GameTypes.Lane lane = GameTypes.Lane.Bottom;
+
+    private void Update()
     {
-        //this variable helps to determine the z position when we have more than one spawn object, 
-        //so they dont spawn in the same position of another instance
-        boundZ = minionSpawnee.GetComponent<Renderer>().bounds.size.z * 1.5f;
-        
-        InvokeRepeating("SpawnMinion", initialSpawnTime, spawnDelay);
+        currentSpawnTime += Time.deltaTime;
+        if(currentSpawnTime >= waveSpawnDelay)
+        {
+            SpawnMinionWave();
+        }
     }
 
-    void SpawnMinion()
+    private void SpawnMinionWave()
     {
-        for(int i = 0; i< quantity; ++i)
+        currentCadency += Time.deltaTime;
+        if(currentCadency >= spawnCadency && currentQuantity < maxQuantity)
         {
-            Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z+(i* boundZ));
-            Instantiate(minionSpawnee, spawnPos, transform.rotation);
+            SpawnMinion();
+            currentQuantity++;
+            if(currentQuantity >= maxQuantity)
+            {
+                currentSpawnTime = 0.0f;
+                currentQuantity = 0;
+            }
+            currentCadency = 0.0f;
         }
-        if (stopSpawns)
+    }
+
+    private void SpawnMinion()
+    {
+        Vector3 spawnPos = transform.position;
+        if(team == GameTypes.Team.Blue)
         {
-            CancelInvoke("SpawnMinion");
+            GameObject blueMinion = Instantiate(blueTeamMinionPrefab, spawnPos, transform.rotation);
+            blueMinion.GetComponent<Minion>().lane = lane;
+            blueMinion.GetComponent<Minion>().team = team;
         }
+        else
+        {
+            GameObject redMinion = Instantiate(redTeamMinionPrefab, spawnPos, transform.rotation);
+            redMinion.GetComponent<Minion>().lane = lane;
+            redMinion.GetComponent<Minion>().team = team;
+        }   
     }
 }

@@ -36,11 +36,6 @@ public class TowerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-       
-    }
-
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<TargetHealth>();

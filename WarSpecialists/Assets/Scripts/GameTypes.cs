@@ -4,13 +4,16 @@ using UnityEngine;
 
 public static class GameTypes
 {
-    public enum MinionLane
+    public enum Lane
     {
-        red_Left,
-        red_Right,
-        red_Middle,
-        blue_Right,
-        blue_Left,
-        blue_Middle
+        Top,
+        Bottom,
+        Middle
+    }
+
+    public enum Team
+    {
+        Blue,
+        Red
     }
 }

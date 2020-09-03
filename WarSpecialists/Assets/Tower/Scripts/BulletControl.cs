@@ -6,7 +6,6 @@ public class BulletControl : MonoBehaviour
 {
     private Transform target;
 
-    [SerializeField]
     public float speed = 70f;
     public int damage = 50;
 
@@ -38,19 +37,19 @@ public class BulletControl : MonoBehaviour
 
     void HitTarget()
     {
-        Damage(target);
+        //Damage(target);
         // Destroy(target.gameObject);
         Destroy(gameObject);
     }
 
-    void Damage(Transform player)
-    {
-        TargetHealth p = player.GetComponent<TargetHealth>();
-        if (p != null)
-        {
-            p.TakeDamage(damage);
-        }
+    //void Damage(Transform player)
+    //{
+    //    TargetHealth p = player.GetComponent<TargetHealth>();
+    //    if (p != null)
+    //    {
+    //        p.TakeDamage(damage);
+    //    }
 
-    }
+    //}
 
 }

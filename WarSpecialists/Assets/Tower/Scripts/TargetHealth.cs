@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class TargetHealth : MonoBehaviour
 {
-    public int health = 100;
-    public void TakeDamage(int amount)
-    {
-        health -= amount;
+    //public int health = 100;
+    //public void TakeDamage(int amount)
+    //{
+    //    health -= amount;
 
-        if (health <= 0)
-        {
-            Die();
-        }
-    }
+    //    if (health <= 0)
+    //    {
+    //        Die();
+    //    }
+    //}
 
-    void Die()
-    {
-        Destroy(gameObject);
-    }
+    //void Die()
+    //{
+    //    Destroy(gameObject);
+    //}
 }
