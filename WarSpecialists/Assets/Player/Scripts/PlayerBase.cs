@@ -11,9 +11,10 @@ public abstract class PlayerBase : MonoBehaviour
     private float _AttackSpeed;
     [SerializeField]
     private float _AttackRange;
+    [SerializeField]
+    private float _Attack;
     public bool IsAlive { get { return Health > 0; } }
     public int Health { get => _health; set => _health = value; }
-    public int Attack { get; protected set; }
     public int Damage { get; protected set; }
     public int Deffense { get; protected set; }
     public int SpecialtyPoints { get; protected set; }
@@ -21,6 +22,7 @@ public abstract class PlayerBase : MonoBehaviour
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
     public float AttackSpeed { get => _AttackSpeed; set => _AttackSpeed = value; }
     public float AttackRange { get => _AttackRange; set => _AttackRange = value; }
+    public float Attack{ get => _Attack; set => _Attack = value; }
 
     virtual protected void Start() { }
     virtual protected void Update() { }

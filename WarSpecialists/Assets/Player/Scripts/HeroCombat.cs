@@ -22,7 +22,7 @@ public class HeroCombat : MonoBehaviour
 
     private float attackDelayTime;
     private float attackTimer = 0f;
-    private float attackRange;
+    private float attackRange, attackDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -32,11 +32,14 @@ public class HeroCombat : MonoBehaviour
         attackDelayTime = gameObject.GetComponent<PlayerBase>().AttackSpeed;
         attackTimer = attackDelayTime;
         attackRange = gameObject.GetComponent<PlayerBase>().AttackRange;
+        attackDamage = gameObject.GetComponent<PlayerBase>().Attack;
     }
 
     // Update is called once per frame
     void Update()
     {
+        attackTimer -= Time.deltaTime;
+
         if (targetedEnemy != null)
         {
             if ((Vector3.Distance(gameObject.transform.position, targetedEnemy.transform.position)) > attackRange)
@@ -60,12 +63,13 @@ public class HeroCombat : MonoBehaviour
                     if (performMeleeAttack)
                     {
                         IsAttacking = true;
-                        attackTimer -= Time.deltaTime;
+                        
                         if (attackTimer < 0f)
                         {
-                            attackTimer = attackDelayTime;
-                            // EnemyTakeDamage here
+                        
+                            targetedEnemy.GetComponent<Minion>().TakeDamage(attackDamage);
                             Debug.Log("Attack the minion");
+                            attackTimer = attackDelayTime;
                         }
                     }
                 }
