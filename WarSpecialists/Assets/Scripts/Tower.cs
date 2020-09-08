@@ -2,11 +2,18 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
 
 public class Tower : MonoBehaviour
 {
    [SerializeField] private List<PlayerHealth> playerList;
     private Transform target;
+
+    [Header("Tower Health")]
+    public float startHealth = 100;
+    private float health;
+    public GameObject deathEffect;
+    public Image healthBar;
 
     [Header("Attributes")]
 
@@ -24,9 +31,25 @@ public class Tower : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
 
+
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        health = startHealth;
+    }
+
+    public void takeDamage(float amount)
+    {
+        health -= amount;
+        healthBar.fillAmount = health / startHealth;
+        if(health <0)
+        {
+            Die();
+        }
+    }
+    void Die()
+    {
+        Destroy(gameObject);
     }
 
     void UpdateTarget()
