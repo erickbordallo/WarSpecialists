@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public abstract class PlayerBase : MonoBehaviour
 {
     [SerializeField]
-    private int _health;
+    private float _health;
     [SerializeField]
     private float _moveSpeed;
     [SerializeField]
@@ -14,7 +14,7 @@ public abstract class PlayerBase : MonoBehaviour
     [SerializeField]
     private float _Attack;
     public bool IsAlive { get { return Health > 0; } }
-    public int Health { get => _health; set => _health = value; }
+    public float Health { get => _health; set => _health = value; }
     public int Damage { get; protected set; }
     public int Deffense { get; protected set; }
     public int SpecialtyPoints { get; protected set; }
@@ -31,5 +31,15 @@ public abstract class PlayerBase : MonoBehaviour
     {
         gameObject.GetComponent<PlayerMovement>().enabled = false;
         gameObject.GetComponent<NavMeshAgent>().enabled = false;
+    }
+
+    public void TakeDamage(float _damage)
+    {
+        _damage -= Deffense;
+        _health -= _damage;
+        if (_health <= 0.0f)
+        {
+            Destroy(gameObject);
+        }
     }
 }
