@@ -33,6 +33,6 @@ public class Minion : MonoBehaviour
 
     private GameTypes.Lane mLane;
     private GameTypes.Team mTeam;
-    private float mHealth = 300.0f;
+    private float mHealth = 100.0f;
     private float mDamage = 5.0f;
 }

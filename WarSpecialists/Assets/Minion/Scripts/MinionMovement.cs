@@ -45,9 +45,9 @@ public class MinionMovement : MonoBehaviour
     {
         mCurrentWaypointIndex++;
         // This code is temporary. Right now, if the unit reaches the end, it will me destroyed.
-        if (mCurrentWaypointIndex == mWaypoints.Count)
+        if (mCurrentWaypointIndex >= mWaypoints.Count)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
             return;
         }
         agent.SetDestination(mWaypoints[mCurrentWaypointIndex].transform.position);
