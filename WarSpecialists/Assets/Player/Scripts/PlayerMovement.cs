@@ -13,17 +13,18 @@ public class PlayerMovement : MonoBehaviour
     public float _rotationVelocity;
     public bool IsMoving { get; set; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
+    public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
 
     private HeroCombat heroCombat;
 
     private void Start()
     {
-        _moveSpeed = gameObject.GetComponent<PlayerBase>().MoveSpeed;
+        MoveSpeed = gameObject.GetComponent<PlayerBase>().MoveSpeed;
         Agent = gameObject.GetComponent<NavMeshAgent>();
         heroCombat = gameObject.GetComponent<HeroCombat>();
         _rotationSpeedMovement = 0.075f;
-        Agent.speed = _moveSpeed;
-        Agent.acceleration = _moveSpeed;
+        Agent.speed = MoveSpeed;
+        Agent.acceleration = MoveSpeed;
         IsMoving = false;
     }
 
