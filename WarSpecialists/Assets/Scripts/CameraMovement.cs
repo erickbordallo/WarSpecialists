@@ -46,6 +46,8 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     private float rightOffset = 30.0f;
 
+    private bool focusPlayer = true;
+
     void Start()
     {
 
@@ -58,6 +60,30 @@ public class CameraMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {   
+        //whenever the player type f, camera will go back to center the player, we can change key later
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            focusPlayer = !focusPlayer;
+        }
+
+        if (focusPlayer == true)
+        {
+            CenterCameraInPlayer();
+        }
+        else
+        {
+            CameraMove();
+        }
+    }
+
+    private void CenterCameraInPlayer()
+    {
+        transform.position = new Vector3(target.transform.position.x + offsetPlayerX, transform.position.y, target.transform.position.z + offsetPlayerZ);
+    }
+
+
+    private void CameraMove()
     {
         //might need a bit tweak when we have the map ready
         //for each side of the screen, first checks that camera position is inside the limits of the map
@@ -102,18 +128,5 @@ public class CameraMovement : MonoBehaviour
                 Cursor.visible = false;
             }
         }
-
-
-
-        //whenever the player type f, camera will go back to center the player, we can change key later
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            CenterCameraInPlayer();
-        }
-    }
-
-    private void CenterCameraInPlayer()
-    {
-        transform.position = new Vector3(target.transform.position.x + offsetPlayerX, transform.position.y, target.transform.position.z + offsetPlayerZ);
     }
 }
