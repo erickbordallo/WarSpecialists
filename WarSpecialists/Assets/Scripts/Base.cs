@@ -7,8 +7,6 @@ public class Base : MonoBehaviour
     [Header("Attributes")]
 
     [SerializeField]
-    public GameTypes.Team team = GameTypes.Team.Blue;
-    [SerializeField]
     private GameObject explosionPrefab;
     [SerializeField]
     private float baseDamage = 100.0f;
@@ -16,8 +14,19 @@ public class Base : MonoBehaviour
     private float fireDelay = 0.5f;
     private float currentFireTime = 0;
 
+    private List<GameObject> possibleTargets;
+
+    [SerializeField]
+    private float distanceFromTarget = 10.0f;
+
     [SerializeField]
     private List<GameObject> enemyList;
+
+    private void Start()
+    {
+        InvokeRepeating("UpdatePossibleTargets", 10.0f, 2.0f);
+    }
+
     void Update()
     {
         currentFireTime += Time.deltaTime;
@@ -39,7 +48,16 @@ public class Base : MonoBehaviour
                     Destroy(explosion, .5f);
                 }
 
-                enemyList[0].GetComponent<Minion>().TakeDamage(baseDamage);
+                Minion m = enemyList[0].GetComponent<Minion>();
+                PlayerBase player = enemyList[0].GetComponent<PlayerBase>();
+                if (m != null)
+                {
+                    m.TakeDamage(baseDamage);
+                }
+                if (player != null)
+                {
+                    player.TakeDamage(baseDamage);
+                }
                 currentFireTime = 0;
             }
         }
@@ -51,20 +69,20 @@ public class Base : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if (other.GetComponent<Targetable>() != null && other.GetComponent<Targetable>().enemyType == Targetable.EnemyType.Minion)
-        {
-            if (other.GetComponent<Minion>().team != team)
-                enemyList.Add(other.gameObject);
+        Targetable tg = other.GetComponent<Targetable>();
+        if (tg != null && tg.team != gameObject.GetComponent<Targetable>().team)
+        { 
+            enemyList.Add(other.gameObject);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Targetable>() != null && other.GetComponent<Targetable>().enemyType == Targetable.EnemyType.Minion)
+        Targetable tg = other.GetComponent<Targetable>();
+        if (tg != null && tg.team != gameObject.GetComponent<Targetable>().team)
         {
-            if (other.GetComponent<Minion>().team != team)
-                enemyList.Remove(other.gameObject);
+            enemyList.Remove(other.gameObject);
         }
     }
+
 }

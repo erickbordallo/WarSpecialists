@@ -1425,7 +1425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mWaypoints: []
-  distanceFromWaypoint: 0.5
+  distanceFromWaypoint: 5
 --- !u!114 &-3576609839861694701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,6 +1439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 0
+  team: 1
 --- !u!136 &5062447528363869181
 CapsuleCollider:
   m_ObjectHideFlags: 0

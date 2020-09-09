@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 8125196164855955300}
   - component: {fileID: 7134460865417958704}
   - component: {fileID: 3323514203832850634}
+  - component: {fileID: -1346498146624879075}
   m_Layer: 0
   m_Name: Maria
   m_TagString: Player
@@ -241,6 +242,7 @@ MonoBehaviour:
   _AttackSpeed: 2
   _AttackRange: 6
   _Attack: 20
+  team: 0
 --- !u!114 &7134460865417958704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +275,19 @@ MonoBehaviour:
   basicAtkIdle: 0
   isHeroAlive: 0
   performMeleeAttack: 1
+--- !u!114 &-1346498146624879075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197515933438465814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5a6c092b55fa548b9980488387e173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 2
 --- !u!95 &1650934331413570631
 Animator:
   serializedVersion: 3
