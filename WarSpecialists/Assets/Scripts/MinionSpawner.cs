@@ -55,13 +55,13 @@ public class MinionSpawner : MonoBehaviour
         {
             GameObject blueMinion = Instantiate(blueTeamMinionPrefab, spawnPos, transform.rotation);
             blueMinion.GetComponent<Minion>().lane = lane;
-            blueMinion.GetComponent<Minion>().team = team;
+            blueMinion.GetComponent<Targetable>().team = team;
         }
         else
         {
             GameObject redMinion = Instantiate(redTeamMinionPrefab, spawnPos, transform.rotation);
             redMinion.GetComponent<Minion>().lane = lane;
-            redMinion.GetComponent<Minion>().team = team;
+            redMinion.GetComponent<Targetable>().team = team;
         }   
     }
 }

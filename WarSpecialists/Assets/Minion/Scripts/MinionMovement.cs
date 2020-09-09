@@ -22,7 +22,7 @@ public class MinionMovement : MonoBehaviour
         foreach(GameObject waypoint in waypoints)
         {
             WaypointScript wpt = waypoint.GetComponent<WaypointScript>();
-            if (wpt.lane == gameObject.GetComponent<Minion>().lane && wpt.team == gameObject.GetComponent<Minion>().team)
+            if (wpt.lane == gameObject.GetComponent<Minion>().lane && wpt.team == gameObject.GetComponent<Targetable>().team)
             {
                 mWaypoints.Add(waypoint);
             }

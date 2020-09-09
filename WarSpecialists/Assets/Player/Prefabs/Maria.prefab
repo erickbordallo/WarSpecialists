@@ -195,6 +195,7 @@ MonoBehaviour:
   _AttackSpeed: 2
   _AttackRange: 6
   _Attack: 20
+  team: 0
 --- !u!114 &7134460865417958704
 MonoBehaviour:
   m_ObjectHideFlags: 0

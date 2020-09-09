@@ -2046,7 +2046,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mWaypoints: []
-  distanceFromWaypoint: 0.5
+  distanceFromWaypoint: 5
 --- !u!114 &2602492100004911561
 MonoBehaviour:
   m_ObjectHideFlags: 0
