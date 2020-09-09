@@ -13,6 +13,10 @@ GameObject:
   - component: {fileID: 6330428751361494851}
   m_Layer: 5
   m_Name: Ability1
+  - component: {fileID: 5089501073066401175}
+  - component: {fileID: 515785332392903755}
+  m_Layer: 0
+  m_Name: SwordSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20,6 +24,8 @@ GameObject:
   m_IsActive: 1
 --- !u!224 &4613003862249204017
 RectTransform:
+--- !u!4 &5089501073066401175
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -187,7 +193,8 @@ MonoBehaviour:
   _health: 100
   _moveSpeed: 20
   _AttackSpeed: 2
-  _AttackRange: 0
+  _AttackRange: 6
+  _Attack: 20
 --- !u!114 &7134460865417958704
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -47,6 +47,15 @@ public class PlayerMovement : MonoBehaviour
             IsMoving = true;
         }
 
+        if (heroCombat.IsAttacking)
+        {
+            Agent.isStopped = true;
+        }
+        else
+        {
+            Agent.isStopped = false;
+        }
+
         if (!Agent.pathPending)
         {
             if (Agent.remainingDistance <= Agent.stoppingDistance)
@@ -57,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void Moving(Vector3 mousePosition)

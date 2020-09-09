@@ -66,4 +66,18 @@ public class MariaAC : MonoBehaviour
             _abilityCastingTimer -= Time.deltaTime;
         }
     }
+
+    //function to do the damage, executed by events in the attack animation 
+    //see events of animation tab in the imported attack prefab
+    public void SwordDamage()
+    {
+        _player.gameObject.GetComponent<HeroCombat>().DoDamage();
+    }
+
+    //function set the attacking to false, executed by events in the attack animation 
+    //see events of animation tab in the imported attack prefab
+    public void AnimationEnds()
+    {
+        _player.gameObject.GetComponent<HeroCombat>().IsAttacking = false;
+    }
 }
