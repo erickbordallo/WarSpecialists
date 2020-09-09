@@ -64,14 +64,7 @@ public class CameraMovement : MonoBehaviour
         //whenever the player type f, camera will go back to center the player, we can change key later
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if(focusPlayer == true)
-            {
-                focusPlayer = false;
-            }
-            else
-            {
-                focusPlayer = true;
-            }
+            focusPlayer = !focusPlayer;
         }
 
         if (focusPlayer == true)
