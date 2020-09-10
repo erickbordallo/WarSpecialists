@@ -8,7 +8,7 @@ public class MariaAbility : MonoBehaviour
 {
     public Image cooldownImg;
     public float cd1 = 5;
-    bool isCooldown = false;
+    private bool isCooldown = false;
     public KeyCode ability1;
 
     // Ability 1
@@ -104,12 +104,12 @@ public class MariaAbility : MonoBehaviour
                 damageDelayTimer -= Time.deltaTime;
                 if (damageDelayTimer <= 0)
                 {
-                    GameObject[] enemies;
-                    enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                    Targetable[] enemies;
+                    enemies = GameObject.FindObjectsOfType<Targetable>();
 
                     foreach (var enemy in enemies)
                     {
-                        Vector3 directionToTarget = transform.position - enemy.transform.position;
+                        Vector3 directionToTarget = transform.position - enemy.gameObject.transform.position;
                         float angel = Vector3.Angle(transform.forward, directionToTarget);
                         if (Mathf.Abs(angel) > 90 && Mathf.Abs(angel) < 270 && directionToTarget.magnitude <= abilityRange)
                             Debug.Log("Ability1 to enemy!");
