@@ -22,7 +22,7 @@ public class MinionMovement : MonoBehaviour
         foreach(GameObject waypoint in waypoints)
         {
             WaypointScript wpt = waypoint.GetComponent<WaypointScript>();
-            if (wpt.lane == gameObject.GetComponent<Minion>().lane && wpt.team == gameObject.GetComponent<Minion>().team)
+            if (wpt.lane == gameObject.GetComponent<Minion>().lane && wpt.team == gameObject.GetComponent<Targetable>().team)
             {
                 mWaypoints.Add(waypoint);
             }
@@ -45,9 +45,9 @@ public class MinionMovement : MonoBehaviour
     {
         mCurrentWaypointIndex++;
         // This code is temporary. Right now, if the unit reaches the end, it will me destroyed.
-        if (mCurrentWaypointIndex == mWaypoints.Count)
+        if (mCurrentWaypointIndex >= mWaypoints.Count)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
             return;
         }
         agent.SetDestination(mWaypoints[mCurrentWaypointIndex].transform.position);

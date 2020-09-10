@@ -22,7 +22,9 @@ public class HeroCombat : MonoBehaviour
 
     private float attackDelayTime;
     private float attackTimer = 0f;
-    private float attackRange;
+    private float attackRange, attackDamage;
+
+    private AudioSource swordSound;
 
     // Start is called before the first frame update
     void Start()
@@ -32,12 +34,19 @@ public class HeroCombat : MonoBehaviour
         attackDelayTime = gameObject.GetComponent<PlayerBase>().AttackSpeed;
         attackTimer = attackDelayTime;
         attackRange = gameObject.GetComponent<PlayerBase>().AttackRange;
+        attackDamage = gameObject.GetComponent<PlayerBase>().Attack;
+
+        Transform swordSoundChild = gameObject.transform.Find("SwordSound");
+        if (swordSoundChild != null)
+            swordSound = swordSoundChild.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (targetedEnemy != null)
+        attackTimer -= Time.deltaTime;
+
+        if (targetedEnemy != null && IsAttacking == false)
         {
             if ((Vector3.Distance(gameObject.transform.position, targetedEnemy.transform.position)) > attackRange)
             {
@@ -59,17 +68,47 @@ public class HeroCombat : MonoBehaviour
                 {
                     if (performMeleeAttack)
                     {
-                        IsAttacking = true;
-                        attackTimer -= Time.deltaTime;
                         if (attackTimer < 0f)
                         {
+                            IsAttacking = true;
+                            movement.IsMoving = false;
                             attackTimer = attackDelayTime;
-                            // EnemyTakeDamage here
-                            Debug.Log("Attack the minion");
                         }
                     }
                 }
             }
         }
+        //if attacking dont move just rotate animation
+        else if (targetedEnemy != null && IsAttacking)
+        {
+            Quaternion rotationToLookAt = Quaternion.LookRotation(targetedEnemy.transform.position - transform.position);
+            float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                rotationToLookAt.eulerAngles.y,
+                ref movement._rotationVelocity,
+                rotateSpeedForAttack * (Time.deltaTime * 5));
+            transform.eulerAngles = new Vector3(0, rotationY, 0);
+        }
+    }
+
+    public void DoDamage()
+    {
+        if (swordSound != null)
+            swordSound.Play();
+
+        if (targetedEnemy != null)
+        {
+            //attack the minion
+            if (targetedEnemy.GetComponent<Minion>() != null)
+            {
+                targetedEnemy.GetComponent<Minion>().TakeDamage(attackDamage);
+            }
+
+            //attack a hero
+            if (targetedEnemy.GetComponent<PlayerBase>() != null)
+            {
+                targetedEnemy.GetComponent<PlayerBase>().TakeDamage(attackDamage);
+            }
+        }
+
     }
 }
