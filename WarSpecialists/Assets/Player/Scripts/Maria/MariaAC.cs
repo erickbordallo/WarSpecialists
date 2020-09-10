@@ -5,16 +5,10 @@ public class MariaAC : MonoBehaviour
     [SerializeField]
     private GameObject _player;
 
-    [SerializeField]
-    private AnimationClip ability1;
-
     private Animator _animator;
     private bool _isMoving;
     private bool _isAlive;
     private bool _isAttack;
-    private bool _abilityCasting;
-    private float _abilityCastingTime;
-    private float _abilityCastingTimer;
     private void Start()
     {
         // Set Moveing animation
@@ -28,12 +22,6 @@ public class MariaAC : MonoBehaviour
 
         _isAttack = _player.gameObject.GetComponent<HeroCombat>().IsAttacking;
         _animator.SetBool("IsAttacking", _isAttack);
-
-        _abilityCasting = _player.gameObject.GetComponent<MariaAbility>().AbilityCasting;
-        _animator.SetBool("AbilityCasting", _abilityCasting);
-
-        _abilityCastingTime = ability1.length;
-        _abilityCastingTimer = 0;
     }
 
     private void Update()
@@ -49,21 +37,5 @@ public class MariaAC : MonoBehaviour
         // Set Attack animation
         _isAttack = _player.gameObject.GetComponent<HeroCombat>().IsAttacking;
         _animator.SetBool("IsAttacking", _isAttack);
-
-        _abilityCasting = _player.gameObject.GetComponent<MariaAbility>().AbilityCasting;
-        _animator.SetBool("AbilityCasting", _abilityCasting);
-
-        if (_abilityCasting && _abilityCastingTimer <= 0)
-        {
-            _abilityCastingTimer = _abilityCastingTime;
-            _player.gameObject.GetComponent<MariaAbility>().AbilityCasting = false;
-            _player.gameObject.GetComponent<PlayerMovement>().Agent.speed = _player.gameObject.GetComponent<PlayerMovement>().MoveSpeed;
-            _player.gameObject.GetComponent<PlayerMovement>().Agent.acceleration = _player.gameObject.GetComponent<PlayerMovement>().MoveSpeed;
-        }
-
-        if(_abilityCasting && _abilityCastingTimer > 0)
-        {
-            _abilityCastingTimer -= Time.deltaTime;
-        }
     }
 }
