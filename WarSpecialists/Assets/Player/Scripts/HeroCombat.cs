@@ -50,6 +50,7 @@ public class HeroCombat : MonoBehaviour
         {
             if ((Vector3.Distance(gameObject.transform.position, targetedEnemy.transform.position)) > attackRange)
             {
+                if(movement.Agent.isActiveAndEnabled) { 
                 movement.IsMoving = true;
                 movement.Agent.SetDestination(targetedEnemy.transform.position);
                 movement.Agent.stoppingDistance = attackRange;
@@ -61,6 +62,7 @@ public class HeroCombat : MonoBehaviour
                     rotateSpeedForAttack * (Time.deltaTime * 5));
 
                 transform.eulerAngles = new Vector3(0, rotationY, 0);
+                }
             }
             else
             {

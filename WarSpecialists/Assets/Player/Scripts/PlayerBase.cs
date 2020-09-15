@@ -39,7 +39,12 @@ public abstract class PlayerBase : MonoBehaviour
         _health -= _damage;
         if (_health <= 0.0f)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
+    }
+
+    public void DestroyHeroObject()
+    {
+        Destroy(gameObject);
     }
 }

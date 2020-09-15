@@ -2,6 +2,7 @@
 
 public class Maria : PlayerBase
 {
+    private AudioSource deadSound;
     protected override void Start()
     {
         Damage = 3;
@@ -9,6 +10,11 @@ public class Maria : PlayerBase
         AttackSpeed = 2f;
         SpecialtyPoints = 0;
         Gold = 0;
+
+        Transform deadSoundChild = gameObject.transform.Find("DeadSound");
+        
+        if (deadSoundChild != null)
+            deadSound = deadSoundChild.GetComponent<AudioSource>();
     }
     protected override void Update()
     {
@@ -16,5 +22,12 @@ public class Maria : PlayerBase
         {
             Died();
         }
+    }
+
+    public void PlayDeadSound()
+    {
+        if (deadSound != null)
+            deadSound.Play();
+
     }
 }
