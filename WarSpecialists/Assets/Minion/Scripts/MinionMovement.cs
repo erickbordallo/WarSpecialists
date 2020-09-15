@@ -89,6 +89,14 @@ public class MinionMovement : MonoBehaviour
             }
         }
 
+        //sort to attack closest objective in list
+        enemyList.Sort(delegate (GameObject a, GameObject b)
+        {
+            return Vector3.Distance(myPosition, a.transform.position)
+            .CompareTo(
+              Vector3.Distance(myPosition, b.transform.position));
+        });
+
     }
     private void Update()
     {
