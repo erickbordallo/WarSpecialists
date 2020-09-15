@@ -17,14 +17,11 @@ public class Base : MonoBehaviour
     private List<GameObject> possibleTargets;
 
     [SerializeField]
-    private float distanceFromTarget = 10.0f;
-
-    [SerializeField]
     private List<GameObject> enemyList;
 
     private void Start()
     {
-        InvokeRepeating("UpdatePossibleTargets", 10.0f, 2.0f);
+        enemyList = new List<GameObject>();
     }
 
     void Update()
