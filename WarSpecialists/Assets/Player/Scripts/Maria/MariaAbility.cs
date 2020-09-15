@@ -13,7 +13,8 @@ public class MariaAbility : MonoBehaviour
 
     // Ability 1
     [SerializeField]
-    private AnimationClip ability_1;
+    public float damage;
+    public AnimationClip ability_1;
     Vector3 position;
     public Canvas ability1Canvas;
     public Image skillshot;
@@ -61,6 +62,12 @@ public class MariaAbility : MonoBehaviour
 
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, abilityRange);
+    }
+
     void Ability1()
     {
         if(Input.GetKey(ability1) && isCooldown == false)
@@ -80,7 +87,13 @@ public class MariaAbility : MonoBehaviour
             movement.Agent.acceleration = 0;
         }
 
-        if(isCooldown)
+        if (Input.GetMouseButton(1))
+        {
+            skillshot.GetComponent<Image>().enabled = false;
+            rangeCircle.GetComponent<Image>().enabled = false;
+        }
+
+        if (isCooldown)
         {
             cooldownImg.fillAmount -= 1 / cd1 * Time.deltaTime;
             skillshot.GetComponent<Image>().enabled = false;
@@ -112,7 +125,10 @@ public class MariaAbility : MonoBehaviour
                         Vector3 directionToTarget = transform.position - enemy.gameObject.transform.position;
                         float angel = Vector3.Angle(transform.forward, directionToTarget);
                         if (Mathf.Abs(angel) > 90 && Mathf.Abs(angel) < 270 && directionToTarget.magnitude <= abilityRange)
-                            Debug.Log("Ability1 to enemy!");
+                            if (enemy.name == "Red_Minion")
+                            {
+                                enemy.gameObject.GetComponent<Minion>().TakeDamage(damage);
+                            }
                     }
 
                     damageDelayTimer = damageDelayTime;
