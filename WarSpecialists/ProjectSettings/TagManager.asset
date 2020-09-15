@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - waypoint
+  - canvas_minion_health
   layers:
   - Default
   - TransparentFX
