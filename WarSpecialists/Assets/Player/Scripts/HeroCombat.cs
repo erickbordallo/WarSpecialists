@@ -108,6 +108,12 @@ public class HeroCombat : MonoBehaviour
             {
                 targetedEnemy.GetComponent<PlayerBase>().TakeDamage(attackDamage);
             }
+
+            //attack tower
+            if(targetedEnemy.GetComponent<Tower>() != null)
+            {
+                targetedEnemy.GetComponent<Tower>().TakeDamage(attackDamage);
+            }
         }
 
     }

@@ -1,9 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Base : MonoBehaviour
 {
+    
+
+    [Header("Base Health")]
+    public float startHealth = 100;
+    private float health;
+    public Image healthBar;
+
     [Header("Attributes")]
 
     [SerializeField]
@@ -25,10 +33,31 @@ public class Base : MonoBehaviour
     private void Start()
     {
         InvokeRepeating("UpdatePossibleTargets", 10.0f, 2.0f);
+        health = startHealth;
     }
+
+    private void TakeDamage(float amount)
+    {
+        health -= amount;
+        healthBar.fillAmount = health / startHealth;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        FindObjectOfType<EndGameManager>().GetLoser(GetComponent<Targetable>().team);
+    }
+
 
     void Update()
     {
+        //if(Input.GetKeyDown(KeyCode.H))
+        //{
+        //    TakeDamage(20);
+        //}
         currentFireTime += Time.deltaTime;
         if (enemyList.Count == 0)
         {
