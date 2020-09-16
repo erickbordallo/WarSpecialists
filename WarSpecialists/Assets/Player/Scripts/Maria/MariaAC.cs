@@ -74,6 +74,8 @@ public class MariaAC : MonoBehaviour
         _player.gameObject.GetComponent<HeroCombat>().DoDamage();
     }
 
+  
+
     //function set the attacking to false, executed by events in the attack animation 
     //see events of animation tab in the imported attack prefab
     public void AnimationEnds()

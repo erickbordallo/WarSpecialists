@@ -54,10 +54,10 @@ public class Base : MonoBehaviour
 
     void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.H))
-        //{
-        //    TakeDamage(20);
-        //}
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            TakeDamage(20);
+        }
         currentFireTime += Time.deltaTime;
         if (enemyList.Count == 0)
         {
