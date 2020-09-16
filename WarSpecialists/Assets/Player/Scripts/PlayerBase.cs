@@ -27,19 +27,18 @@ public abstract class PlayerBase : MonoBehaviour
     virtual protected void Start() { }
     virtual protected void Update() { }
 
-    protected void Died()
-    {
-        gameObject.GetComponent<PlayerMovement>().enabled = false;
-        gameObject.GetComponent<NavMeshAgent>().enabled = false;
-    }
-
     public void TakeDamage(float _damage)
     {
         _damage -= Deffense;
         _health -= _damage;
-        if (_health <= 0.0f)
-        {
-            Destroy(gameObject);
-        }
+    }
+
+    public void RespawnHeroObject()
+    {
+        _health = 100.0f;
+        gameObject.GetComponent<PlayerMovement>().Agent.Warp(gameObject.GetComponent<Maria>().GetInitialTransform());
+        gameObject.GetComponent<HeroCombat>().targetedEnemy=null;
+        gameObject.GetComponent<HeroCombat>().IsAttacking=false;
+        GetComponent<PlayerMovement>().IsMoving = false;
     }
 }

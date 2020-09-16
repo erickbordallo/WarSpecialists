@@ -80,4 +80,17 @@ public class MariaAC : MonoBehaviour
     {
         _player.gameObject.GetComponent<HeroCombat>().IsAttacking = false;
     }
+
+    //function set the attacking to false, executed by events in the attack animation 
+    //see events of animation tab in the imported deah prefab
+    public void DeadAnimationEnds()
+    {
+        _player.gameObject.GetComponent<PlayerBase>().RespawnHeroObject();
+    }
+    //function set the attacking to false, executed by events in the attack animation 
+    //see events of animation tab in the imported deah prefab
+    public void DeadSound()
+    {
+        _player.gameObject.GetComponent<Maria>().PlayDeadSound();
+    }
 }

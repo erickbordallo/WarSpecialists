@@ -79,7 +79,8 @@ public class CameraMovement : MonoBehaviour
 
     private void CenterCameraInPlayer()
     {
-        transform.position = new Vector3(target.transform.position.x + offsetPlayerX, transform.position.y, target.transform.position.z + offsetPlayerZ);
+        if(target!=null)
+            transform.position = new Vector3(target.transform.position.x + offsetPlayerX, transform.position.y, target.transform.position.z + offsetPlayerZ);
     }
 
 

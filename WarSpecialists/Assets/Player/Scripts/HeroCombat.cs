@@ -50,17 +50,20 @@ public class HeroCombat : MonoBehaviour
         {
             if ((Vector3.Distance(gameObject.transform.position, targetedEnemy.transform.position)) > attackRange)
             {
-                movement.IsMoving = true;
-                movement.Agent.SetDestination(targetedEnemy.transform.position);
-                movement.Agent.stoppingDistance = attackRange;
+                if (movement.Agent.isActiveAndEnabled)
+                {
+                    movement.IsMoving = true;
+                    movement.Agent.SetDestination(targetedEnemy.transform.position);
+                    movement.Agent.stoppingDistance = attackRange;
 
-                Quaternion rotationToLookAt = Quaternion.LookRotation(targetedEnemy.transform.position - transform.position);
-                float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-                    rotationToLookAt.eulerAngles.y,
-                    ref movement._rotationVelocity,
-                    rotateSpeedForAttack * (Time.deltaTime * 5));
+                    Quaternion rotationToLookAt = Quaternion.LookRotation(targetedEnemy.transform.position - transform.position);
+                    float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                        rotationToLookAt.eulerAngles.y,
+                        ref movement._rotationVelocity,
+                        rotateSpeedForAttack * (Time.deltaTime * 5));
 
-                transform.eulerAngles = new Vector3(0, rotationY, 0);
+                    transform.eulerAngles = new Vector3(0, rotationY, 0);
+                }
             }
             else
             {
@@ -81,12 +84,18 @@ public class HeroCombat : MonoBehaviour
         //if attacking dont move just rotate animation
         else if (targetedEnemy != null && IsAttacking)
         {
-            Quaternion rotationToLookAt = Quaternion.LookRotation(targetedEnemy.transform.position - transform.position);
-            float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+            Vector3 targetLookRotation = targetedEnemy.transform.position - transform.position;
+
+            //check to avoid an error of lookrotation on a zero vector3
+            if (targetLookRotation != Vector3.zero)
+            {
+                Quaternion rotationToLookAt = Quaternion.LookRotation(targetLookRotation);
+                float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
                 rotationToLookAt.eulerAngles.y,
                 ref movement._rotationVelocity,
                 rotateSpeedForAttack * (Time.deltaTime * 5));
-            transform.eulerAngles = new Vector3(0, rotationY, 0);
+                transform.eulerAngles = new Vector3(0, rotationY, 0);
+            }
         }
     }
 
