@@ -13,22 +13,12 @@ public class Minion : MonoBehaviour
 
     void Start()
     {
-       // mHealthBar = GameObject.FindGameObjectWithTag("canvas_minion_health").GetComponent<HealthBar>();
         mHealthBar.setMaxHealth(mHealth);
     }
 
      void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(20.0f);
-        }
-
-        if (Input.GetKey(KeyCode.P))
-        {
-            transform.Rotate(0, -60 * Time.deltaTime * 5, 0, Space.Self);
-        }
-
+        
     }
     public GameTypes.Lane lane
     {
