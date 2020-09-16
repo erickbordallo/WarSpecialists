@@ -38,11 +38,11 @@ public class Tower : MonoBehaviour
         health = startHealth;
     }
 
-    public void takeDamage(float amount)
+    public void TakeDamage(float amount)
     {
         health -= amount;
         healthBar.fillAmount = health / startHealth;
-        if(health <0)
+        if(health <= 0)
         {
             Die();
         }
