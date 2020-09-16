@@ -85,7 +85,7 @@ public class MariaAC : MonoBehaviour
     //see events of animation tab in the imported deah prefab
     public void DeadAnimationEnds()
     {
-        _player.gameObject.GetComponent<PlayerBase>().DestroyHeroObject();
+        _player.gameObject.GetComponent<PlayerBase>().RespawnHeroObject();
     }
     //function set the attacking to false, executed by events in the attack animation 
     //see events of animation tab in the imported deah prefab

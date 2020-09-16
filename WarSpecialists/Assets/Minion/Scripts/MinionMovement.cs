@@ -21,24 +21,32 @@ public class MinionMovement : MonoBehaviour
 
     private float _rotationVelocity;
 
+    [SerializeField]
     private float attackDamage = 10f;
+
+    [SerializeField]
     private float attackDelayTime = 1f;
+
     private float attackTimer = 0f;
 
     private List<GameObject> possibleTargets;
-    
+
     [SerializeField]
     private float distanceFromTarget = 35.0f;
-    
+
     [SerializeField]
     private List<GameObject> enemyList;
 
     private GameTypes.Team myTeam;
 
-    
+    float SqrAttackRange;
+
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        SqrAttackRange = attackRange * attackRange;
 
         //Finding waypoints
         GameObject[] waypoints = GameObject.FindGameObjectsWithTag("waypoint");
@@ -66,18 +74,19 @@ public class MinionMovement : MonoBehaviour
     private void UpdatePossibleTargets()
     {
         Targetable[] targets = FindObjectsOfType<Targetable>();
-        
+
         for (int i = 0; i < targets.Length; i++)
         {
-            if (targets[i].gameObject != null && targets[i].team != myTeam && 
-                (targets[i].enemyType == Targetable.EnemyType.Minion || targets[i].enemyType == Targetable.EnemyType.Champion))
+            if (targets[i].gameObject != null && targets[i].team != myTeam)
                 possibleTargets.Add(targets[i].gameObject);
         }
 
         Vector3 myPosition = gameObject.transform.position;
+
+        float SqrDistanceFromTarget = distanceFromTarget * distanceFromTarget;
         for (int i = 0; i < possibleTargets.Count; i++)
         {
-            if (possibleTargets[i]!=null && (Vector3.Distance(myPosition, possibleTargets[i].transform.position)) < distanceFromTarget)
+            if (possibleTargets[i] != null && (possibleTargets[i].transform.position - myPosition).sqrMagnitude < SqrDistanceFromTarget)
             {
                 if (!enemyList.Contains(possibleTargets[i]))
                     enemyList.Add(possibleTargets[i]);
@@ -92,9 +101,8 @@ public class MinionMovement : MonoBehaviour
         //sort to attack closest objective in list
         enemyList.Sort(delegate (GameObject a, GameObject b)
         {
-            return Vector3.Distance(myPosition, a.transform.position)
-            .CompareTo(
-              Vector3.Distance(myPosition, b.transform.position));
+            return ((a.transform.position - myPosition).sqrMagnitude)
+                .CompareTo((b.transform.position - myPosition).sqrMagnitude);
         });
 
     }
@@ -102,6 +110,7 @@ public class MinionMovement : MonoBehaviour
     {
         attackTimer -= Time.deltaTime;
 
+        SqrAttackRange = attackRange * attackRange;
 
         if (enemyList.Count == 0)
         {
@@ -117,7 +126,7 @@ public class MinionMovement : MonoBehaviour
 
         if (targetedEnemy != null)
         {
-            if ((Vector3.Distance(gameObject.transform.position, targetedEnemy.transform.position)) > attackRange)
+            if ((targetedEnemy.transform.position - gameObject.transform.position).sqrMagnitude > SqrAttackRange)
             {
                 //movement.IsMoving = true;
                 agent.SetDestination(targetedEnemy.transform.position);
@@ -133,12 +142,9 @@ public class MinionMovement : MonoBehaviour
             }
             else
             {
-
                 if (attackTimer < 0f)
                 {
                     agent.isStopped = true;
-                    //IsAttacking = true;
-                    //movement.IsMoving = false;
 
                     if (targetedEnemy.GetComponent<Minion>() != null)
                     {
@@ -149,6 +155,11 @@ public class MinionMovement : MonoBehaviour
                     {
                         targetedEnemy.GetComponent<PlayerBase>().TakeDamage(attackDamage);
                     }
+
+                    //if (targetedEnemy.GetComponent<Tower>() != null)
+                    //{
+                    //    targetedEnemy.GetComponent<Tower>().TakeDamage(attackDamage);
+                    //}
 
                     attackTimer = attackDelayTime;
                 }

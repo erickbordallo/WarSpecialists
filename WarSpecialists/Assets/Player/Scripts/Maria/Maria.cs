@@ -3,6 +3,8 @@
 public class Maria : PlayerBase
 {
     private AudioSource deadSound;
+    private Vector3 initialTransform;
+
     protected override void Start()
     {
         Damage = 3;
@@ -15,19 +17,19 @@ public class Maria : PlayerBase
         
         if (deadSoundChild != null)
             deadSound = deadSoundChild.GetComponent<AudioSource>();
-    }
-    protected override void Update()
-    {
-        if (!IsAlive)
-        {
-            Died();
-        }
+
+        initialTransform = gameObject.transform.position;
     }
 
     public void PlayDeadSound()
     {
         if (deadSound != null)
             deadSound.Play();
-
     }
+
+    public Vector3 GetInitialTransform()
+    {
+        return initialTransform;
+    }
+
 }
