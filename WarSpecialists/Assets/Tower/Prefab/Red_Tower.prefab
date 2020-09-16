@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 411524}
   - component: {fileID: 9566220}
   m_Layer: 0
-  m_Name: Tower Mage
+  m_Name: Red_Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +500,7 @@ Transform:
   m_GameObject: {fileID: 187918}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 30, z: 20}
+  m_LocalScale: {x: 30, y: 30, z: 30}
   m_Children:
   - {fileID: 409546}
   - {fileID: 458352}
