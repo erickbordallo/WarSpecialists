@@ -26,6 +26,10 @@ public class HeroCombat : MonoBehaviour
 
     private AudioSource swordSound;
 
+    //===========zhou=============
+    private Animator animator;
+    //===========zhou=============
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +39,10 @@ public class HeroCombat : MonoBehaviour
         attackTimer = attackDelayTime;
         attackRange = gameObject.GetComponent<PlayerBase>().AttackRange;
         attackDamage = gameObject.GetComponent<PlayerBase>().Attack;
+
+        //===========zhou=============
+        animator = GetComponent<Animator>();
+        //===========zhou=============
 
         Transform swordSoundChild = gameObject.transform.Find("SwordSound");
         if (swordSoundChild != null)
@@ -106,6 +114,9 @@ public class HeroCombat : MonoBehaviour
             //attack a hero
             if (targetedEnemy.GetComponent<PlayerBase>() != null)
             {
+                //===========zhou=============
+                animator.SetTrigger("isAttacking");
+                //===========zhou=============
                 targetedEnemy.GetComponent<PlayerBase>().TakeDamage(attackDamage);
             }
         }
