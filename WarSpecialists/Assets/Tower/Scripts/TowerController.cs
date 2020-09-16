@@ -4,61 +4,85 @@ using UnityEngine;
 
 public class TowerController : MonoBehaviour
 {
+    [Header("Attributes")]
 
     [SerializeField]
-    private List<TargetHealth> playerList;
-    private Transform target;
+    private GameObject explosionPrefab;
+    [SerializeField]
+    private float TowerControllerDamage = 100.0f;
+    [SerializeField]
+    private float fireDelay = 0.5f;
+    private float currentFireTime = 0;
 
-    public float range = 4.0f;
-    public float fireRate = 1f;
-    private float fireCountdown = 0f;
+    private List<GameObject> possibleTargets;
 
-    public string playerTag = "Player";
+    [SerializeField]
+    private float distanceFromTarget = 10.0f;
 
-    public Transform partToRotate;
-    public float turnSpeed = 10.0f;
+    [SerializeField]
+    private List<GameObject> enemyList;
 
-    public GameObject bulletPrefab;
-    public Transform firePoint;
-
-    void Start()
+    private void Start()
     {
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        InvokeRepeating("UpdatePossibleTargets", 10.0f, 2.0f);
+    }
+
+    void Update()
+    {
+        currentFireTime += Time.deltaTime;
+        if (enemyList.Count == 0)
+        {
+            return;
+        }
+
+        //checks if first element of the list is still in game if found apply damage, otherwise remove it from list
+        //TODO: instead of checking first element, loop list and find first object(minion) found
+        if (enemyList[0] != null)
+        {
+            if (currentFireTime >= fireDelay)
+            {
+                //small explosion might need some position adjustment.
+                if (explosionPrefab != null)
+                {
+                    GameObject explosion = Instantiate(explosionPrefab, enemyList[0].GetComponent<Transform>().position + new Vector3(0, 6, 0), Quaternion.identity) as GameObject;
+                    Destroy(explosion, .5f);
+                }
+
+                Minion m = enemyList[0].GetComponent<Minion>();
+                PlayerBase player = enemyList[0].GetComponent<PlayerBase>();
+                if (m != null)
+                {
+                    m.TakeDamage(TowerControllerDamage);
+                }
+                if (player != null)
+                {
+                    player.TakeDamage(TowerControllerDamage);
+                }
+                currentFireTime = 0;
+            }
+        }
+        else
+        {
+            enemyList.RemoveAt(0);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        print("Somebody get into the attack range of tower");
-        var player = other.GetComponent<TargetHealth>();
-        if (player)
+        Targetable tg = other.GetComponent<Targetable>();
+        if (tg != null && tg.team != gameObject.GetComponent<Targetable>().team)
         {
-            playerList.Add(player);
+            enemyList.Add(other.gameObject);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<TargetHealth>();
-        if (player)
+        Targetable tg = other.GetComponent<Targetable>();
+        if (tg != null && tg.team != gameObject.GetComponent<Targetable>().team)
         {
-            playerList.Remove(player);
+            enemyList.Remove(other.gameObject);
         }
     }
 
-    void Shoot()
-    {
-        GameObject bulletGo = (GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        BulletControl bullet = bulletGo.GetComponent<BulletControl>();
-
-        if (bullet != null)
-        {
-            bullet.Seek(target);
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
-    }
 }
