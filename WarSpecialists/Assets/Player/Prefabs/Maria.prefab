@@ -236,13 +236,14 @@ MonoBehaviour:
   cooldownImg: {fileID: 1238408376357454915}
   cd1: 5
   ability1: 113
+  damage: 50
   ability_1: {fileID: -203655887218126122, guid: 42e5cedb8ee49e943bdf9021dc7c6b30,
     type: 3}
   ability1Canvas: {fileID: 7755792385979899994}
   skillshot: {fileID: 5838961427066041682}
   rangeCircle: {fileID: 8362634818234260279}
   player: {fileID: 1197515933438465810}
-  abilityRange: 20
+  abilityRange: 9.63
 --- !u!1 &2199862532282087439
 GameObject:
   m_ObjectHideFlags: 0
