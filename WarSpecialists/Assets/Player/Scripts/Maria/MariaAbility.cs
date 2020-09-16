@@ -125,7 +125,7 @@ public class MariaAbility : MonoBehaviour
                         Vector3 directionToTarget = transform.position - enemy.gameObject.transform.position;
                         float angel = Vector3.Angle(transform.forward, directionToTarget);
                         if (Mathf.Abs(angel) > 90 && Mathf.Abs(angel) < 270 && directionToTarget.magnitude <= abilityRange)
-                            if (enemy.name == "Red_Minion")
+                            if (enemy.team != gameObject.getComponent<Targetable>().team)
                             {
                                 enemy.gameObject.GetComponent<Minion>().TakeDamage(damage);
                             }
